@@ -1,31 +1,14 @@
 package br.edu.ifpb.barbeiro;
 
-public class Cliente extends Thread {
-	private Barbearia barbearia;
-	private boolean cortar = true;
-	private String nomeCliente;
+public class Cliente implements Runnable {
+    private final Barbeiro barbeiro;
 
-	public Cliente(Barbearia barbearia, String nome) {
-		this.barbearia = barbearia;
-		this.nomeCliente = nome;
-	}
+    public Cliente(Barbeiro barbeiro) {
+        this.barbeiro = barbeiro;
+    }
 
-	public void run() {
-		while (cortar) {
-			try {
-				int sleepTime;
-				do {
-					sleepTime = ((int) (Math.random() * 5000));
-				} while (sleepTime < 1000);
-
-				Thread.sleep(sleepTime);
-				barbearia.aguardaVez(this);
-			} catch (Exception e) {
-			}
-		}
-
-	}
-	public String nomeCliente(){
-		return nomeCliente;
-	}
+    @Override
+    public void run() {
+        barbeiro.chegarCliente();
+    }
 }
