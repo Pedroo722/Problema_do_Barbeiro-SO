@@ -32,7 +32,7 @@ public class GeradorCliente extends Thread {
         while (true) {
             Cliente cliente = new Cliente(barbearia); // cria cliente
             cliente.start(); // inicia como thread
-            cliente.setClienteId(cliente.getId());
+            cliente.setClienteId(cliente.threadId());
 
             try {
                 // Pausa a execução por um tempo aleatório entre 0 e 4 segundos

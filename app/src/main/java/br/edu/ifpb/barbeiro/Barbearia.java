@@ -6,6 +6,8 @@ import java.util.List;
 /**
  * A classe Barbearia simula o comportamento de uma barbearia com múltiplos barbeiros e clientes.
  * Ela gerencia a fila de clientes, as cadeiras disponíveis para espera e os barbeiros que cortam os cabelos dos clientes.
+ * 
+ * @author Pedroo722, ViniciusCavalcantePequeno
  */
 public class Barbearia {
     private final int numeroCadeiras;
