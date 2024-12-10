@@ -1,61 +1,49 @@
 package br.edu.ifpb.barbeiro;
 
-import java.util.concurrent.Semaphore;
+/**
+ * A classe Barbeiro representa um barbeiro que trabalha na barbearia.
+ * Cada barbeiro é uma thread que executa o processo de cortar o cabelo dos clientes.
+ * 
+ * O barbeiro começa "dormindo" e, assim que um cliente está disponível, ele começa
+ * a cortar o cabelo até que não haja mais clientes esperando.
+ * 
+ * @author Pedroo722
+ */
+public class Barbeiro extends Thread {
+    private Barbearia barbearia;
+    private int barbeiroId;
 
-public class Barbeiro {
-    // Semáforos
-    private final Semaphore semaforoBarbeiro;   // Controla se o barbeiro está dormindo ou trabalhando
-    private final Semaphore semaforoSalaEspera;  // Controla as cadeiras na sala de espera
-    private final Semaphore semaforoCliente;    // Controla o cliente acordando o barbeiro
-
-    public Barbeiro(int numCadeiras) {
-        this.semaforoBarbeiro = new Semaphore(0); // barbeiro começa dormindo
-        this.semaforoSalaEspera = new Semaphore(numCadeiras); // salas disponíveis
-        this.semaforoCliente = new Semaphore(0);
+    /**
+     * Construtor da classe Barbeiro.
+     * Inicializa a barbearia onde o barbeiro vai trabalhar e o seu identificador.
+     * 
+     * @param barbearia instância da barbearia onde o barbeiro irá trabalhar
+     * @param barbeiroId identificador único para o barbeiro
+     */
+    public Barbeiro(Barbearia barbearia, int barbeiroId) {
+        this.barbearia = barbearia;
+        this.barbeiroId = barbeiroId;
     }
 
-    // Método para o barbeiro cortar cabelo
-    public void cortarCabelo() {
+    /**
+     * Método responsável por executar a lógica do barbeiro. O barbeiro começa "dormindo"
+     * e fica esperando por clientes na barbearia. Quando um cliente chega, ele corta o cabelo
+     * e repete o processo indefinidamente.
+     */
+    @Override
+    public void run() {
         try {
-            // O barbeiro espera até que um cliente o acorde
-            semaforoCliente.acquire();
-
-            System.out.println(Thread.currentThread().getName() + " está cortando o cabelo.");
-
-            // Simula o tempo de corte de cabelo (2 segundos)
-            Thread.sleep(2000);
-
-            System.out.println(Thread.currentThread().getName() + " terminou de cortar o cabelo.");
-
-            // O barbeiro termina e libera a cadeira na sala de espera
-            semaforoSalaEspera.release();
-        } catch (InterruptedException e) {
-			System.out.println("Erro: " + e);
+            // Simula o barbeiro "dormindo", aguardando um cliente
+            System.out.println("O barbeiro " + barbeiroId + " está dormindo...");
+            Thread.sleep(1000); // Dorme por 1 segundo antes de começar o processo
+        } catch (InterruptedException interruptedException) {
+            // Trata a exceção caso a thread seja interrompida
+            interruptedException.printStackTrace();
         }
-    }
 
-    // Método para o cliente chegar na barbearia
-    public void chegarCliente() {
-        try {
-            // O cliente tenta entrar na sala de espera
-            if (semaforoSalaEspera.tryAcquire()) {
-                System.out.println(Thread.currentThread().getName() + " entrou na sala de espera.");
-
-                // O cliente acorda o barbeiro
-                semaforoCliente.release();
-                // O cliente espera o barbeiro começar o corte
-                semaforoBarbeiro.acquire();
-            } else {
-                // Se não há cadeira, o cliente vai embora
-                System.out.println(Thread.currentThread().getName() + " foi embora, sem lugar para esperar.");
-            }
-        } catch (InterruptedException e) {
-			System.out.println("Erro: " + e);
+        // O barbeiro entra em um loop infinito, onde ele corta cabelo de clientes
+        while (true) {
+            barbearia.cortarCabelo(barbeiroId);
         }
-    }
-
-    // Getter para o semáforo cliente
-    public Semaphore getSemaforoCliente() {
-        return semaforoCliente;
     }
 }
