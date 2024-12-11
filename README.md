@@ -12,7 +12,7 @@ O problema envolve um barbeiro que atende a uma fila de clientes, mas só pode a
 
 # Objetivo
 
-O objetivo dessa implementação foi aplicar os conceitos de sincronização e comunicação entre processos para resolver o problema do barbeiro dorminhoco de maneira eficiente, sem deadlocks, starvation ou inconsistências.
+O objetivo dessa implementação foi aplicar os conceitos de sincronização e comunicação entre processos para resolver o problema do barbeiro dorminhoco de maneira eficiente, sem deadlocks, starvation ou inconsistências. Fornecendo assim uma solução eficiente para o problema do barbeiro dorminhoco.
 
 # Solução Implementada
 
@@ -28,7 +28,3 @@ O objetivo dessa implementação foi aplicar os conceitos de sincronização e c
    - Se não houver cadeiras ou barbeiros disponíveis, o cliente vai embora ou espera.
 3. O barbeiro atende os clientes um de cada vez, e o atendimento é simulado por uma pausa de 5 segundos.
 4. Quando o barbeiro terminar de atender, ele volta a dormir até que um novo cliente chegue.
-
-# Conclusão
-
-Este projeto permitiu a aplicação prática de conceitos de sincronização de processos e threads, fornecendo uma solução eficiente para o problema do barbeiro dorminhoco.
