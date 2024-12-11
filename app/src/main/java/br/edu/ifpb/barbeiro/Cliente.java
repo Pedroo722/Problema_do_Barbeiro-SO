@@ -4,20 +4,20 @@ package br.edu.ifpb.barbeiro;
  * A classe Cliente representa um cliente que chega à barbearia para cortar o cabelo.
  * Cada cliente é uma thread que simula a ação de ir à barbearia, onde ele é adicionado à fila de espera
  * para ser atendido por um barbeiro.
- * 
+ *
  * O cliente possui um identificador único e, ao executar a thread, ele é adicionado à fila da barbearia
  * para aguardar o atendimento do barbeiro.
- * 
+ *
  * @author ViniciusCavalcantePequeno
  */
 public class Cliente extends Thread {
-    private Barbearia barbearia;
+    private final Barbearia barbearia;
     private long clienteId;
 
     /**
      * Construtor da classe Cliente.
      * Inicializa a barbearia onde o cliente deseja cortar o cabelo.
-     * 
+     *
      * @param barbearia instância da barbearia onde o cliente vai cortar o cabelo
      */
     public Cliente(Barbearia barbearia) {
@@ -26,7 +26,7 @@ public class Cliente extends Thread {
 
     /**
      * Método responsável por retornar o identificador único do cliente.
-     * 
+     *
      * @return identificador único do cliente
      */
     public long getClienteId() {
@@ -35,7 +35,7 @@ public class Cliente extends Thread {
 
     /**
      * Método responsável por definir o identificador único do cliente.
-     * 
+     *
      * @param clienteId identificador único a ser atribuído ao cliente
      */
     public void setClienteId(long clienteId) {
