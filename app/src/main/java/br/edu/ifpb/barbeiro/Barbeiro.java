@@ -3,20 +3,20 @@ package br.edu.ifpb.barbeiro;
 /**
  * A classe Barbeiro representa um barbeiro que trabalha na barbearia.
  * Cada barbeiro é uma thread que executa o processo de cortar o cabelo dos clientes.
- * 
+ *
  * O barbeiro começa "dormindo" e, assim que um cliente está disponível, ele começa
  * a cortar o cabelo até que não haja mais clientes esperando.
- * 
+ *
  * @author Pedroo722
  */
 public class Barbeiro extends Thread {
-    private Barbearia barbearia;
-    private int barbeiroId;
+    private final Barbearia barbearia;
+    private final int barbeiroId;
 
     /**
      * Construtor da classe Barbeiro.
      * Inicializa a barbearia onde o barbeiro vai trabalhar e o seu identificador.
-     * 
+     *
      * @param barbearia instância da barbearia onde o barbeiro irá trabalhar
      * @param barbeiroId identificador único para o barbeiro
      */
@@ -37,8 +37,7 @@ public class Barbeiro extends Thread {
             System.out.println("O barbeiro " + barbeiroId + " está dormindo...");
             Thread.sleep(1000); // Dorme por 1 segundo antes de começar o processo
         } catch (InterruptedException interruptedException) {
-            // Trata a exceção caso a thread seja interrompida
-            interruptedException.printStackTrace();
+            System.out.println(interruptedException);
         }
 
         // O barbeiro entra em um loop infinito, onde ele corta cabelo de clientes

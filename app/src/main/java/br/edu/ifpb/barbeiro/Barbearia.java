@@ -6,19 +6,19 @@ import java.util.List;
 /**
  * A classe Barbearia simula o comportamento de uma barbearia com múltiplos barbeiros e clientes.
  * Ela gerencia a fila de clientes, as cadeiras disponíveis para espera e os barbeiros que cortam os cabelos dos clientes.
- * 
+ *
  * @author Pedroo722, ViniciusCavalcantePequeno
  */
 public class Barbearia {
     private final int numeroCadeiras;
     private final int numeroBarbeiros;
     private int barbeirosDisponiveis;
-    private List<Cliente> listaClientes; // clientes aguardando para cortar o cabelo
+    private final List<Cliente> listaClientes; // clientes aguardando para cortar o cabelo
 
     /**
      * Construtor da classe Barbearia.
      * Inicializa o número de barbeiros, o número de cadeiras e a lista de clientes.
-     * 
+     *
      * @param numeroBarbeiros número de barbeiros na barbearia
      * @param numeroCadeiras número de cadeiras para a sala de espera
      */
@@ -50,7 +50,7 @@ public class Barbearia {
                     // O barbeiro espera ser notificado quando um cliente chegar
                     listaClientes.wait();
                 } catch (InterruptedException interruptedException) {
-                    interruptedException.printStackTrace();
+                    System.out.println(interruptedException);
                 }
             }
             // Obtém o cliente da fila (primeiro da fila)
@@ -78,20 +78,20 @@ public class Barbearia {
             // Após o corte, incrementa o número de barbeiros disponíveis
             barbeirosDisponiveis++;
         } catch (InterruptedException interruptedException) {
-            interruptedException.printStackTrace();
+            System.out.println(interruptedException);
         }
 
         // corte foi concluído
         System.out.println("O barbeiro " + barbeiroId
                 + " terminou de cortar o cabelo do cliente "
-                + cliente.getClienteId() + " em " + duracao
-                + " milissegundos.");
+                + cliente.getClienteId() + " em " + Math.divideExact(duracao, 1000)
+                + " segundos.");
     }
 
     /**
      * Método responsável por adicionar um cliente à lista de espera.
      * Se não houver cadeiras ou barbeiros disponíveis, o cliente sairá da barbearia.
-     * 
+     *
      * @param cliente cliente que chegou à barbearia
      */
     public void adicionarCliente(Cliente cliente) {
