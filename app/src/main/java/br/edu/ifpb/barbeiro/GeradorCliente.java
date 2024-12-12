@@ -30,13 +30,13 @@ public class GeradorCliente extends Thread {
      */
     @Override
     public void run() {
-        while (contadorId < 16) {
+        while (contadorId < 11) {
             Cliente cliente = new Cliente(barbearia);
             cliente.setClienteId(getNovoId());
             cliente.start();
 
             try {
-                // Pausa a execução por um tempo aleatório entre 0 e 4 segundos
+                // tempo aleatório entre 0 e 4 segundos, até o próximo cliente chegar
                 Thread.sleep((long) (Math.random() * 4000));
             } catch (InterruptedException interruptedException) {
                 System.out.println(interruptedException);
@@ -44,10 +44,6 @@ public class GeradorCliente extends Thread {
         }
     }
 
-    /**
-     * Método sincronizado para garantir que IDs sejam atribuídos de forma única e progressiva.
-     * @return o próximo ID disponível
-     */
     private synchronized int getNovoId() {
         return contadorId++;
     }
