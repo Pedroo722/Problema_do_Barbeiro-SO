@@ -34,7 +34,7 @@ public class Barbeiro extends Thread {
     public void run() {
         try {
             // Simula o barbeiro "dormindo", aguardando um cliente
-            System.out.println("O barbeiro " + barbeiroId + " está dormindo...");
+            System.out.println("O barbeiro está dormindo...");
             Thread.sleep(1000); // Dorme por 1 segundo antes de começar o processo
         } catch (InterruptedException interruptedException) {
             System.out.println(interruptedException);

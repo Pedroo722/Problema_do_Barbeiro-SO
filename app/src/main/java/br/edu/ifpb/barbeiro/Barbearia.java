@@ -32,60 +32,47 @@ public class Barbearia {
     /**
      * Método responsável por simular o corte de cabelo de um cliente.
      * Um barbeiro espera por um cliente, realiza o corte e depois libera a vaga.
-     * 
+     *
      * @param barbeiroId identificador do barbeiro que vai cortar o cabelo
-     * @author Pedroo722, ViniciusCavalcantePequneo
      */
     public void cortarCabelo(int barbeiroId) {
-        Cliente cliente;
+        while (true) {
+            Cliente cliente;
 
-        // Sincroniza o acesso à lista de clientes para evitar condições de corrida
-        synchronized (listaClientes) {
-            // Se não houver clientes, o barbeiro aguarda
-            while (listaClientes.isEmpty()) {
-                System.out.println();
-                System.out.println("O barbeiro " + barbeiroId
-                        + " está esperando por clientes.");
-                try {
-                    // O barbeiro espera ser notificado quando um cliente chegar
-                    listaClientes.wait();
-                } catch (InterruptedException interruptedException) {
-                    System.out.println(interruptedException);
+            synchronized (listaClientes) {
+                // Barbeiro dorme se não houver clientes
+                while (listaClientes.isEmpty()) {
+                    System.out.println();
+                    System.out.println("O barbeiro " + barbeiroId + " está dormindo enquanto espera por clientes.");
+                    try {
+                        listaClientes.wait();
+                    } catch (InterruptedException e) {
+                        System.out.println("Interrupção: " + e.getMessage());
+                    }
                 }
+
+                // Barbeiro pega o próximo cliente da fila
+                cliente = ((LinkedList<Cliente>) listaClientes).poll();
+                System.out.println();
+                System.out.println("O barbeiro " + barbeiroId + " encontrou o cliente " + cliente.getClienteId() + " na fila.");
+                barbeirosDisponiveis--;
             }
-            // Obtém o cliente da fila (primeiro da fila)
-            cliente = (Cliente) ((LinkedList<?>) listaClientes).poll();
 
-            System.out.println();
-            System.out.println("O barbeiro " + barbeiroId
-                    + " encontrou o cliente " + cliente.getClienteId()
-                    + " na fila.");
+            // Simula o corte de cabelo
+            try {
+                System.out.println("O barbeiro " + barbeiroId + " está cortando o cabelo do cliente " + cliente.getClienteId() + ".");
+                Thread.sleep(5000); // 5 segundos para o tempo de corte
+                System.out.println("O barbeiro " + barbeiroId + " terminou de cortar o cabelo do cliente " + cliente.getClienteId() + ".");
+            } catch (InterruptedException e) {
+                System.out.println("Interrupção: " + e.getMessage());
+            }
+
+            synchronized (listaClientes) {
+                barbeirosDisponiveis++;
+                listaClientes.notifyAll(); // Notifica possíveis clientes que estavam esperando
+                // fazendo o barbeiro acordar caso ele esteja dormindo
+            }
         }
-
-        long duracao = 0;
-        try {
-            // Decrementa o número de barbeiros disponíveis
-            barbeirosDisponiveis--;
-
-            System.out.println("O barbeiro " + barbeiroId
-                    + " está cortando o cabelo do cliente "
-                    + cliente.getClienteId() + ".");
-
-            // duração do corte de cabelo (5 segundos)
-            duracao = (long) (5000);
-            Thread.sleep(duracao);
-
-            // Após o corte, incrementa o número de barbeiros disponíveis
-            barbeirosDisponiveis++;
-        } catch (InterruptedException interruptedException) {
-            System.out.println(interruptedException);
-        }
-
-        // corte foi concluído
-        System.out.println("O barbeiro " + barbeiroId
-                + " terminou de cortar o cabelo do cliente "
-                + cliente.getClienteId() + " em " + Math.divideExact(duracao, 1000)
-                + " segundos.");
     }
 
     /**
@@ -95,33 +82,17 @@ public class Barbearia {
      * @param cliente cliente que chegou à barbearia
      */
     public void adicionarCliente(Cliente cliente) {
-        System.out.println();
-        System.out.println("Cliente " + cliente.getClienteId()
-                + " acabou de chegar.");
+        System.out.println("\nCliente " + cliente.getClienteId() + " acabou de chegar.");
 
-        // Sincroniza o acesso à lista de clientes para evitar condições de corrida
         synchronized (listaClientes) {
-            // Sem cadeiras disponíveis, o cliente vai embora
             if (listaClientes.size() == numeroCadeiras) {
-                System.out.println("Nenhuma cadeira disponível.");
-                System.out.println("O cliente " + cliente.getClienteId()
-                        + " deixou a barbearia.");
-            } else if (barbeirosDisponiveis > 0) {
-                // Se barbeiro disponível, o cliente é atendido
-                ((LinkedList<Cliente>) listaClientes).offer(cliente);
-                listaClientes.notify();
+                System.out.println();
+                System.out.println("Nenhuma cadeira disponível. O cliente " + cliente.getClienteId() + " deixou a barbearia.");
             } else {
-                // Se barbeiro ocupado, o cliente senta-se na sala de espera
-                ((LinkedList<Cliente>) listaClientes).offer(cliente);
-
-                System.out.println("Todos os barbeiros estão ocupados."
-                        + " O cliente " + cliente.getClienteId()
-                        + " sentou-se na sala de espera.");
-
-                // Notifica o barbeiro para verificar a fila
-                if (listaClientes.size() == 1) {
-                    listaClientes.notify();
-                }
+                listaClientes.add(cliente);
+                System.out.println("O cliente " + cliente.getClienteId() + " sentou-se na sala de espera.");
+                listaClientes.notify(); // Notifica os barbeiros para atender o cliente
+                // acordando o barbeiro caso ele esteja dormindo
             }
         }
     }

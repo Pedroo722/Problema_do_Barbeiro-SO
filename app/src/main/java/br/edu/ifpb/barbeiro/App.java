@@ -5,16 +5,15 @@ package br.edu.ifpb.barbeiro;
  * Ela configura o número de barbeiros e cadeiras, cria uma instância da barbearia,
  * inicializa os barbeiros e gera clientes aleatórios que chegam para cortar o cabelo.
  *
- * A classe simula a interação entre os barbeiros e os clientes na barbearia. 
+ * A classe simula a interação entre os barbeiros e os clientes na barbearia.
  * Cada barbeiro trabalha como uma thread independente e a geração de clientes também ocorre em paralelo.
  *
- * O número de barbeiros e cadeiras pode ser facilmente configurado, e os clientes chegam de forma 
+ * O número de barbeiros e cadeiras pode ser facilmente configurado, e os clientes chegam de forma
  * aleatória para sentar nas cadeiras e esperar para serem atendidos pelos barbeiros.
  *
  * @author ViniciusCavalcantePequeno
  */
 public class App {
-
     public static void main(String[] args) {
         int numeroBarbeiros = 1;
         int numeroCadeiras = 5;
