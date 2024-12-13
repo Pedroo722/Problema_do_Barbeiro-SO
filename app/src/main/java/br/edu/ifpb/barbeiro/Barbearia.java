@@ -70,7 +70,7 @@ public class Barbearia {
             synchronized (listaClientes) {
                 barbeirosDisponiveis++;
                 listaClientes.notifyAll(); // Notifica possíveis clientes que estavam esperando
-                // fazendo o barbeiro acordar caso ele esteja dormindo
+                // acordando o barbeiro caso esteja dormindo
             }
         }
     }

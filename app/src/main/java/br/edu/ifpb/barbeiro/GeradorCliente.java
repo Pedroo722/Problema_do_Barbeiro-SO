@@ -33,7 +33,7 @@ public class GeradorCliente extends Thread {
         while (contadorId < 11) {
             Cliente cliente = new Cliente(barbearia);
             cliente.setClienteId(getNovoId());
-            cliente.start();
+            cliente.start(); // automaticamente realiza o run() do cliente
 
             try {
                 // tempo aleatório entre 0 e 4 segundos, até o próximo cliente chegar

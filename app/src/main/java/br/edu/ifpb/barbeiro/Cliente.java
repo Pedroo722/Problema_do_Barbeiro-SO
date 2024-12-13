@@ -24,20 +24,10 @@ public class Cliente extends Thread {
         this.barbearia = barbearia;
     }
 
-    /**
-     * Método responsável por retornar o identificador único do cliente.
-     *
-     * @return identificador único do cliente
-     */
     public long getClienteId() {
         return clienteId;
     }
 
-    /**
-     * Método responsável por definir o identificador único do cliente.
-     *
-     * @param clienteId identificador único a ser atribuído ao cliente
-     */
     public void setClienteId(long clienteId) {
         this.clienteId = clienteId;
     }
@@ -51,7 +41,7 @@ public class Cliente extends Thread {
     }
 
     /**
-     * Método que executa a thread do cliente. Quando o cliente é iniciado,
+     * Método que executa a thread do cliente. Quando o cliente é iniciado pelo 'start',
      * ele chama o método `irCortarCabelo()` para se adicionar à fila da barbearia.
      */
     @Override

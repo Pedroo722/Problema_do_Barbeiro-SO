@@ -26,7 +26,8 @@ public class Barbeiro extends Thread {
     }
 
     /**
-     * Método responsável por executar a lógica do barbeiro. O barbeiro começa "dormindo"
+     * Método responsável por executar a lógica do barbeiro. Inicando quando,
+     * o barbeiro é iniciado pelo 'start'. O barbeiro começa "dormindo"
      * e fica esperando por clientes na barbearia. Quando um cliente chega, ele corta o cabelo
      * e repete o processo indefinidamente.
      */
@@ -35,7 +36,7 @@ public class Barbeiro extends Thread {
         try {
             // Simula o barbeiro "dormindo", aguardando um cliente
             System.out.println("O barbeiro está dormindo...");
-            Thread.sleep(1000); // Dorme por 1 segundo antes de começar o processo
+            Thread.sleep(1000);
         } catch (InterruptedException interruptedException) {
             System.out.println(interruptedException);
         }

@@ -25,12 +25,12 @@ public class App {
             // Cria uma instância de Barbeiro para cada barbeiro configurado
             Barbeiro barbeiro = new Barbeiro(barbearia, i);
             // Inicia a execução do barbeiro como uma thread
-            barbeiro.start();
+            barbeiro.start(); // automaticamente realiza o run() do barbeiro
         }
 
         // Cria e inicializa a geração de clientes, que será executada como uma thread
         GeradorCliente clientes = new GeradorCliente(barbearia);
         // Inicia a execução do gerador de clientes
-        clientes.start();
+        clientes.start(); // automaticamente realiza o run() do gerador de clientes
     }
 }
